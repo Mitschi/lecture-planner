@@ -27,7 +27,7 @@ public class UserController {
 //            return "Hello DOCKER!";
 //        }
 //    }
-    @GetMapping(name = "/users")
+    @GetMapping("/users")
     public List<User> listUsers() {
         return this.userDao.findAll();
     }
