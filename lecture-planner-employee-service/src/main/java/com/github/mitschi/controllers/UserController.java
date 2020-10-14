@@ -1,5 +1,8 @@
-package com.github.mitschi;
+package com.github.mitschi.controllers;
 
+import com.github.mitschi.ResourceNotFoundException;
+import com.github.mitschi.repositories.UserDao;
+import com.github.mitschi.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
