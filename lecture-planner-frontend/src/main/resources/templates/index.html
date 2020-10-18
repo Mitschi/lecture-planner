@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lecture Planner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <style>
+        .split {
+        height: 100%;
+        width: 50%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+        }
+
+        /* Control the left side */
+        .left {
+        left: 0;
+        background-color: #111;
+        }
+
+        /* Control the right side */
+        .right {
+        right: 0;
+        background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="split left">
+        <table>
+            <tr th:each="employee: ${employees}">
+                <p th:text="${employee.name} + ', ' + ${employee.employeeNumber}" />
+            </tr>
+        </table>
+
+
+    </div>
+
+    <div class="split right">
+        <table>
+            <tr th:each="lecture: ${lectures}">
+                <p th:text="${lecture.name} + ', ' + ${lecture.number}" />
+            </tr>
+        </table>
+
+        
+    </div>
+
+</body>
+</html>
