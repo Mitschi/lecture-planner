@@ -6,25 +6,24 @@
 
     <style>
         .split {
-        height: 100%;
-        width: 50%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        overflow-x: hidden;
-        padding-top: 20px;
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            padding-left: 20px;
         }
 
         /* Control the left side */
         .left {
-        left: 0;
-        background-color: #111;
+            left: 0;
         }
 
         /* Control the right side */
         .right {
-        right: 0;
-        background-color: red;
+            right: 0;
         }
     </style>
 </head>
@@ -33,21 +32,47 @@
     <div class="split left">
         <table>
             <tr th:each="employee: ${employees}">
-                <p th:text="${employee.name} + ', ' + ${employee.employeeNumber}" />
+                <p th:text="${employee.getName()} + ', ' + ${employee.getEmployeeNumber()}"></p>
             </tr>
         </table>
 
+        <form action="/addEmployee">
+            <label for="fEmpName">Employee Name:</label> <br>
+            <input type="text" id="fEmpName" name="pEmpName" />
+            <br><br>
 
+            <label for="fEmpNum">Employee Number:</label> <br>
+            <input type="text" id="fEmpNum" name="pEmpNum" />
+            <br><br>
+
+            <input type="submit" value="Add Employee">
+        </form>
     </div>
 
     <div class="split right">
         <table>
             <tr th:each="lecture: ${lectures}">
-                <p th:text="${lecture.name} + ', ' + ${lecture.number}" />
+                <p th:text="${lecture.getName()} + ', ' + ${lecture.getNumber()}"></p>
             </tr>
         </table>
 
-        
+        <form action="/addLecture">
+            <label for="fLecName">Lecture Name:</label> <br>
+            <input type="text" id="fLecName" name="pLecName" />
+            <br><br>
+
+            <label for="fLecNum">Lecture Number:</label> <br>
+            <input type="text" id="fLecNum" name="pLecNum" />
+            <br><br>
+
+            <label for="fLecEmpId">Lecturer (Employee) Name:</label> <br>
+            <select id="fLecEmpId" name="pLecEmpId">
+                <option th:each="employee: ${employees}" th:value="${employee.getId()}" th:text="${employee.getName()}"></option>
+            </select>
+            <br><br>
+
+            <input type="submit" value="Add Lecture">
+        </form>
     </div>
 
 </body>

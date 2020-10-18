@@ -2,6 +2,7 @@ package com.github.mitschi.services;
 
 import com.github.mitschi.models.Employee;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,4 +20,7 @@ public class EmployeeService {
         return restTemplate.getForObject(employeesEndpointUrl, Employee[].class);
     }
 
+    public ResponseEntity<Employee> addEmployee(Employee e) {
+        return restTemplate.postForEntity(employeesEndpointUrl, e, Employee.class);
+    }
 }

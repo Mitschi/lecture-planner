@@ -9,6 +9,15 @@ public class Lecture {
 
     private Long lecturerId;
 
+    public Lecture(){
+    }
+
+    public Lecture(String name, String number, Long lecturerId) {
+        this.name = name;
+        this.number = number;
+        this.lecturerId = lecturerId;
+    }
+
     public Long getId() {
         return id;
     }
