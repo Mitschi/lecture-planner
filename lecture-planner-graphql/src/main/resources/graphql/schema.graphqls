@@ -1,0 +1,12 @@
+type Lecture {
+    id: Int
+    name: String
+    number: String
+    lecturer: Employee
+}
+
+type Employee {
+    id: Int
+    name: String
+    employeeNumber: Int
+}

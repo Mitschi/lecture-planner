@@ -12,6 +12,7 @@
     <module>lecture-planner-lecture-service</module>
     <module>lecture-planner-employee-service</module>
       <module>lecture-planner-frontend</module>
+    <module>lecture-planner-graphql</module>
   </modules>
 
 
