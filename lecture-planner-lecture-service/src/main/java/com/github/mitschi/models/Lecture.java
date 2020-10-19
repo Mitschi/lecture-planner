@@ -42,7 +42,7 @@ public class Lecture {
         return lecturerId;
     }
     public void setLecturerId(Long lecturerId) {
-        lecturerId = lecturerId;
+        this.lecturerId = lecturerId;
     }
 
     public void updateFromDto(Lecture other) {
