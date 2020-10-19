@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  # Employee Microservice
+  lecture-planner-employee-db:
+    image: mariadb
+#    ports:
+#      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=db_example
+      - MYSQL_ROOT_PASSWORD=mypass
+  lecture-planner-employee:
+    image: lecture-planner-employee
+    build: lecture-planner-employee-service
+    ports:
+      - "8085:8081"
+    environment:
+      - MYSQL_HOST='lecture-planner-employee-db'
+    depends_on:
+      - lecture-planner-employee-db
+    restart: on-failure # db might not be ready yet -> restart until it is
+
+  # Lecture Microservice
+  lecture-planner-lecture-db:
+    image: mariadb
+#    ports:
+#      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=db_example
+      - MYSQL_ROOT_PASSWORD=mypass
+  lecture-planner-lecture:
+    image: lecture-planner-lecture
+    build: lecture-planner-lecture-service
+    ports:
+      - "8086:8082"
+    environment:
+      - MYSQL_HOST='lecture-planner-lecture-db'
+    depends_on:
+      - lecture-planner-lecture-db
+    restart: on-failure # db might not be ready yet -> restart until it is
+
+  # Frontend Microservice
+  lecture-planner-frontend:
+    image: lecture-planner-frontend
+    build: lecture-planner-frontend
+    ports:
+      - "8080:8080"
+    environment:
+      - LECTURE_HOST='lecture-planner-lecture'
+      - EMPLOYEE_HOST='lecture-planner-employee'
+    depends_on:
+      - lecture-planner-lecture
+      - lecture-planner-employee
+    restart: on-failure
