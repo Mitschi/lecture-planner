@@ -1,9 +1,12 @@
 version: '3'
 
+# run maven install before building images
+
 services:
   # Employee Microservice
   lecture-planner-employee-db:
     image: mariadb
+    # no external access needed
 #    ports:
 #      - "3306:3306"
     environment:
@@ -13,9 +16,10 @@ services:
     image: lecture-planner-employee
     build: lecture-planner-employee-service
     ports:
-      - "8085:8081"
+      - "8081:8081"
     environment:
-      - MYSQL_HOST='lecture-planner-employee-db'
+      - MYSQL_HOST=lecture-planner-employee-db
+      - MYSQL_PORT=3306
     depends_on:
       - lecture-planner-employee-db
     restart: on-failure # db might not be ready yet -> restart until it is
@@ -23,6 +27,7 @@ services:
   # Lecture Microservice
   lecture-planner-lecture-db:
     image: mariadb
+    # no external access needed
 #    ports:
 #      - "3306:3306"
     environment:
@@ -32,9 +37,10 @@ services:
     image: lecture-planner-lecture
     build: lecture-planner-lecture-service
     ports:
-      - "8086:8082"
+      - "8082:8082"
     environment:
-      - MYSQL_HOST='lecture-planner-lecture-db'
+      - MYSQL_HOST=lecture-planner-lecture-db
+      - MYSQL_PORT=3306
     depends_on:
       - lecture-planner-lecture-db
     restart: on-failure # db might not be ready yet -> restart until it is
@@ -46,8 +52,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - LECTURE_HOST='lecture-planner-lecture'
-      - EMPLOYEE_HOST='lecture-planner-employee'
+      - EMPLOYEE_HOST=lecture-planner-employee
+      - EMPLOYEE_PORT=8081
+      - LECTURE_HOST=lecture-planner-lecture
+      - LECTURE_PORT=8082
     depends_on:
       - lecture-planner-lecture
       - lecture-planner-employee

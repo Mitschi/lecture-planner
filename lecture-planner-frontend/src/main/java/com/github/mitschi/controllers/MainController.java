@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -22,11 +21,22 @@ public class MainController {
     private LectureService lectureService;
 
     @GetMapping("/")
-    public String main(Model model){
-        Employee[] employees = employeeService.getEmployees();
-        Lecture[] lectures = lectureService.getLectures();
-
+    public String main(Model model) {
+        // TODO better error handling
+        Employee[] employees;
+        try {
+            employees = employeeService.getEmployees();
+        } catch (Exception e) {
+            employees = new Employee[0];
+        }
         model.addAttribute("employees", employees);
+
+        Lecture[] lectures;
+        try {
+            lectures = lectureService.getLectures();
+        } catch (Exception e) {
+            lectures = new Lecture[0];
+        }
         model.addAttribute("lectures", lectures);
 
         return "index";
@@ -35,7 +45,7 @@ public class MainController {
     @GetMapping("/addEmployee")
     public RedirectView addEmployee(@RequestParam("pEmpName") String name,
                                     @RequestParam("pEmpNum") int num,
-                                    Model model){
+                                    Model model) {
         Employee e = new Employee(name, num);
         employeeService.addEmployee(e);
 
@@ -47,7 +57,7 @@ public class MainController {
     public RedirectView addEmployee(@RequestParam("pLecName") String name,
                                     @RequestParam("pLecNum") String num,
                                     @RequestParam("pLecEmpId") long empId,
-                                    Model model){
+                                    Model model) {
         Lecture l = new Lecture(name, num, empId);
         lectureService.addLecture(l);
 
