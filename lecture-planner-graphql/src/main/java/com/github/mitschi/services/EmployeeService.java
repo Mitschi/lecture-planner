@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 public class EmployeeService {
     private final RestTemplate restTemplate;
@@ -27,10 +24,19 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(long id) throws RestClientException {
-        return restTemplate.getForObject(employeesEndpointUrl+"/"+id, Employee.class);
+        return restTemplate.getForObject(employeesEndpointUrl + '/' + id, Employee.class);
     }
 
-    public ResponseEntity<Employee> addEmployee(Employee e) {
-        return restTemplate.postForEntity(employeesEndpointUrl, e, Employee.class);
+    public Employee addEmployee(Employee e) throws RestClientException {
+        ResponseEntity<Employee> response = restTemplate.postForEntity(employeesEndpointUrl, e, Employee.class);
+        return response.getBody();
+    }
+
+    public void updateEmployee(long id, Employee e) throws RestClientException {
+        restTemplate.put(employeesEndpointUrl + '/' + id, e);
+    }
+
+    public void deleteEmployee(long id) throws RestClientException {
+        restTemplate.delete(employeesEndpointUrl + '/' + id);
     }
 }

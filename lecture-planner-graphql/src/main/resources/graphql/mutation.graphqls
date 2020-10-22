@@ -1,0 +1,9 @@
+type Mutation {
+    createEmployee(input: EmployeeInput!): Employee!
+    updateEmployee(id: ID!, input: EmployeeInput!): Employee!
+    deleteEmployee(id: ID!): Int!
+
+    createLecture(input: LectureInput!): Lecture!
+    updateLecture(id: ID!, input: LectureInput!): Lecture!
+    deleteLecture(id: ID!): Int!
+}

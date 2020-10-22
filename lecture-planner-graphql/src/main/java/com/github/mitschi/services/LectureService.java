@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 public class LectureService {
     private final RestTemplate restTemplate;
@@ -30,7 +27,16 @@ public class LectureService {
         return restTemplate.getForObject(lectureEndpointUrl+"/"+id, Lecture.class);
     }
 
-    public ResponseEntity<Lecture> addLecture(Lecture l) {
-        return restTemplate.postForEntity(lectureEndpointUrl, l, Lecture.class);
+    public Lecture addLecture(Lecture l) {
+        ResponseEntity<Lecture> response = restTemplate.postForEntity(lectureEndpointUrl, l, Lecture.class);
+        return response.getBody();
+    }
+
+    public void updateLecture(long id, Lecture l) throws RestClientException {
+        restTemplate.put(lectureEndpointUrl + '/' + id, l);
+    }
+
+    public void deleteLecture(long id) throws RestClientException {
+        restTemplate.delete(lectureEndpointUrl + '/' + id);
     }
 }

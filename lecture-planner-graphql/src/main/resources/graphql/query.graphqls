@@ -1,3 +1,7 @@
 type Query {
-    lectureById(id: Int): Lecture
+    lectureById(id: ID!): Lecture
+    lectures: [Lecture]
+
+    employeeById(id: ID!): Employee
+    employees: [Employee]
 }

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class Query implements GraphQLQueryResolver {
+public class QueryResolver implements GraphQLQueryResolver {
 
     @Autowired
     private EmployeeService employeeService;
@@ -21,6 +21,18 @@ public class Query implements GraphQLQueryResolver {
 
     public Lecture lectureById(long id){
         return lectureService.getLectureById(id);
+    }
+
+    public List<Lecture> lectures(){
+        return Arrays.asList(lectureService.getLectures());
+    }
+
+    public Employee employeeById(long id){
+        return employeeService.getEmployeeById(id);
+    }
+
+    public List<Employee> employees(){
+        return Arrays.asList(employeeService.getEmployees());
     }
 
 }
