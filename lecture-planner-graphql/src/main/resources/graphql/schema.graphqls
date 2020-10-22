@@ -1,12 +1,12 @@
 type Lecture {
-    id: Int
+    id: ID!
     name: String
     number: String
     lecturer: Employee
 }
 
 type Employee {
-    id: Int
+    id: ID!
     name: String
     employeeNumber: Int
 }

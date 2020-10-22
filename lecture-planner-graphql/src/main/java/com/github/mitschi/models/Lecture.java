@@ -3,27 +3,27 @@ package com.github.mitschi.models;
 import java.io.Serializable;
 
 public class Lecture implements Serializable {
-    private Integer id;
+    private Long id;
 
     private String name;
 
     private String number;
 
-    private Integer lecturerId;
+    private long lecturerId;
 
     public Lecture(){
     }
 
-    public Lecture(String name, String number, Integer lecturerId) {
+    public Lecture(String name, String number, long lecturerId) {
         this.name = name;
         this.number = number;
         this.lecturerId = lecturerId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,10 +41,10 @@ public class Lecture implements Serializable {
         this.number = number;
     }
 
-    public Integer getLecturerId() {
+    public long getLecturerId() {
         return lecturerId;
     }
-    public void setLecturerId(Integer lecturerId) {
+    public void setLecturerId(long lecturerId) {
         this.lecturerId = lecturerId;
     }
 

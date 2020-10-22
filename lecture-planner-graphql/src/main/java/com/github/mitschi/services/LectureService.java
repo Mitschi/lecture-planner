@@ -26,7 +26,7 @@ public class LectureService {
         return restTemplate.getForObject(lectureEndpointUrl, Lecture[].class);
     }
 
-    public Lecture getLectureById(Integer id) throws RestClientException {
+    public Lecture getLectureById(long id) throws RestClientException {
         return restTemplate.getForObject(lectureEndpointUrl+"/"+id, Lecture.class);
     }
 

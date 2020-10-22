@@ -26,7 +26,7 @@ public class EmployeeService {
         return restTemplate.getForObject(employeesEndpointUrl, Employee[].class);
     }
 
-    public Employee getEmployeeById(Integer id) throws RestClientException {
+    public Employee getEmployeeById(long id) throws RestClientException {
         return restTemplate.getForObject(employeesEndpointUrl+"/"+id, Employee.class);
     }
 
