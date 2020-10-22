@@ -1,20 +1,20 @@
 package com.github.mitschi.models;
 
-public class Lecture {
+import java.io.Serializable;
+
+public class Lecture implements Serializable {
     private Long id;
 
     private String name;
 
     private String number;
 
-    private Long lecturerId;
-
-    private Employee lecturer;
+    private long lecturerId;
 
     public Lecture(){
     }
 
-    public Lecture(String name, String number, Long lecturerId) {
+    public Lecture(String name, String number, long lecturerId) {
         this.name = name;
         this.number = number;
         this.lecturerId = lecturerId;
@@ -41,26 +41,17 @@ public class Lecture {
         this.number = number;
     }
 
-    public Long getLecturerId() {
+    public long getLecturerId() {
         return lecturerId;
     }
-    public void setLecturerId(Long lecturerId) {
+    public void setLecturerId(long lecturerId) {
         this.lecturerId = lecturerId;
-    }
-
-    public Employee getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(Employee lecturer) {
-        this.lecturer = lecturer;
     }
 
     public void updateFromDto(Lecture other) {
         this.setName(other.getName());
         this.setNumber(other.getNumber());
         this.setLecturerId(other.getLecturerId());
-        this.setLecturer(other.getLecturer());
     }
 
     @Override

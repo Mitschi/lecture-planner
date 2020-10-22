@@ -1,0 +1,25 @@
+# Query:
+mutation Create($input: EmployeeInput!){
+  createEmployee(input: $input) {
+    id
+  }
+}
+# Var:
+{
+  "input": {
+    "name": "test",
+    "employeeNumber": 2
+  }
+}
+
+# Query:
+mutation create($input: LectureInput!) {
+  createLecture(input: $input) {
+    name
+  }
+}
+# Var:
+{
+  "input":
+  {"name": "tu", "number": "00", "lecturerId": 2}
+}

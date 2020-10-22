@@ -1,0 +1,7 @@
+type Query {
+    lectureById(id: ID!): Lecture
+    lectures: [Lecture]
+
+    employeeById(id: ID!): Employee
+    employees: [Employee]
+}

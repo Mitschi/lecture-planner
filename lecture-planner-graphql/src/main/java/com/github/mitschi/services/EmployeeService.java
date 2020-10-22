@@ -23,7 +23,20 @@ public class EmployeeService {
         return restTemplate.getForObject(employeesEndpointUrl, Employee[].class);
     }
 
-    public ResponseEntity<Employee> addEmployee(Employee e) {
-        return restTemplate.postForEntity(employeesEndpointUrl, e, Employee.class);
+    public Employee getEmployeeById(long id) throws RestClientException {
+        return restTemplate.getForObject(employeesEndpointUrl + '/' + id, Employee.class);
+    }
+
+    public Employee addEmployee(Employee e) throws RestClientException {
+        ResponseEntity<Employee> response = restTemplate.postForEntity(employeesEndpointUrl, e, Employee.class);
+        return response.getBody();
+    }
+
+    public void updateEmployee(long id, Employee e) throws RestClientException {
+        restTemplate.put(employeesEndpointUrl + '/' + id, e);
+    }
+
+    public void deleteEmployee(long id) throws RestClientException {
+        restTemplate.delete(employeesEndpointUrl + '/' + id);
     }
 }

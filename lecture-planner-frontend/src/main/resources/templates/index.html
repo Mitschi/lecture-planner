@@ -52,7 +52,7 @@
     <div class="split right">
         <table>
             <tr th:each="lecture: ${lectures}">
-                <p th:text="${lecture.getName()} + ', ' + ${lecture.getNumber()}"></p>
+                <p th:text="${lecture.getName()} + ', ' + ${lecture.getNumber()} + ', by ' + ${lecture.getLecturer().getName()}"></p>
             </tr>
         </table>
 

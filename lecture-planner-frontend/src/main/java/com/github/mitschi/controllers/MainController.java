@@ -2,8 +2,7 @@ package com.github.mitschi.controllers;
 
 import com.github.mitschi.models.Employee;
 import com.github.mitschi.models.Lecture;
-import com.github.mitschi.services.EmployeeService;
-import com.github.mitschi.services.LectureService;
+import com.github.mitschi.services.graphql.GraphQLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +14,14 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MainController {
 
     @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
-    private LectureService lectureService;
+    private GraphQLService graphqlService;
 
     @GetMapping("/")
     public String main(Model model) {
         // TODO better error handling
         Employee[] employees;
         try {
-            employees = employeeService.getEmployees();
+            employees = graphqlService.getEmployees();
         } catch (Exception e) {
             employees = new Employee[0];
         }
@@ -33,7 +29,7 @@ public class MainController {
 
         Lecture[] lectures;
         try {
-            lectures = lectureService.getLectures();
+            lectures = graphqlService.getLectures();
         } catch (Exception e) {
             lectures = new Lecture[0];
         }
@@ -47,7 +43,7 @@ public class MainController {
                                     @RequestParam("pEmpNum") int num,
                                     Model model) {
         Employee e = new Employee(name, num);
-        employeeService.addEmployee(e);
+        graphqlService.addEmployee(e);
 
         // redirect back to home
         return new RedirectView("/");
@@ -59,7 +55,7 @@ public class MainController {
                                     @RequestParam("pLecEmpId") long empId,
                                     Model model) {
         Lecture l = new Lecture(name, num, empId);
-        lectureService.addLecture(l);
+        graphqlService.addLecture(l);
 
         // redirect back to home
         return new RedirectView("/");

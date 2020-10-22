@@ -45,12 +45,12 @@ services:
       - lecture-planner-lecture-db
     restart: on-failure # db might not be ready yet -> restart until it is
 
-  # Frontend Microservice
-  lecture-planner-frontend:
-    image: lecture-planner-frontend
-    build: lecture-planner-frontend
+  # GraphQL Microservice
+  lecture-planner-graphql:
+    image: lecture-planner-graphql
+    build: lecture-planner-graphql
     ports:
-      - "8080:8080"
+      - "8083:8083"
     environment:
       - EMPLOYEE_HOST=lecture-planner-employee
       - EMPLOYEE_PORT=8081
@@ -59,4 +59,17 @@ services:
     depends_on:
       - lecture-planner-lecture
       - lecture-planner-employee
+    restart: on-failure
+
+  # Frontend Microservice
+  lecture-planner-frontend:
+    image: lecture-planner-frontend
+    build: lecture-planner-frontend
+    ports:
+      - "8080:8080"
+    environment:
+      - GRAPHQL_HOST=lecture-planner-graphql
+      - GRAPHQL_PORT=8083
+    depends_on:
+      - lecture-planner-graphql
     restart: on-failure
