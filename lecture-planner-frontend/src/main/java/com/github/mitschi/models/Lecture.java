@@ -9,6 +9,8 @@ public class Lecture {
 
     private Long lecturerId;
 
+    private Employee lecturer;
+
     public Lecture(){
     }
 
@@ -46,10 +48,19 @@ public class Lecture {
         this.lecturerId = lecturerId;
     }
 
+    public Employee getLecturer() {
+        return lecturer;
+    }
+
+    public void setLecturer(Employee lecturer) {
+        this.lecturer = lecturer;
+    }
+
     public void updateFromDto(Lecture other) {
         this.setName(other.getName());
         this.setNumber(other.getNumber());
         this.setLecturerId(other.getLecturerId());
+        this.setLecturer(other.getLecturer());
     }
 
     @Override

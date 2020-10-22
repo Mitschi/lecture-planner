@@ -68,11 +68,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - EMPLOYEE_HOST=lecture-planner-employee
-      - EMPLOYEE_PORT=8081
-      - LECTURE_HOST=lecture-planner-lecture
-      - LECTURE_PORT=8082
+      - GRAPHQL_HOST=lecture-planner-graphql
+      - GRAPHQL_PORT=8083
     depends_on:
-      - lecture-planner-lecture
-      - lecture-planner-employee
+      - lecture-planner-graphql
     restart: on-failure
