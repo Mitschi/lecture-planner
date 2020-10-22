@@ -2,7 +2,6 @@ package com.github.mitschi.models;
 
 import java.io.Serializable;
 
-// TODO create contracts
 public class Employee implements Serializable {
     private Long id;
 
