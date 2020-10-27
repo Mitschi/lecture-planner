@@ -1,7 +1,9 @@
 package com.github.mitschi.controllers;
 
+import com.github.mitschi.IllegalResourceException;
 import com.github.mitschi.ResourceNotFoundException;
 import com.github.mitschi.models.Employee;
+import com.github.mitschi.models.validation.EmployeeValidator;
 import com.github.mitschi.repositories.EmployeeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeDao employeeDao;
+
+    @Autowired
+    private EmployeeValidator validator;
 
     @GetMapping()
     public List<Employee> listEmployees() {
@@ -37,14 +41,19 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
+    public Employee createEmployee(@RequestBody Employee employee) throws IllegalResourceException {
+        if (!validator.isEmployeeValid(employee))
+            throw new IllegalResourceException("Employee values are not valid");
+
         return employeeDao.save(employee);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id,
-                                                 @Valid @RequestBody Employee employeeDto)
-            throws ResourceNotFoundException {
+                                                   @RequestBody Employee employeeDto)
+            throws ResourceNotFoundException, IllegalResourceException {
+        if (!validator.isEmployeeValid(employeeDto))
+            throw new IllegalResourceException("Employee values are not valid");
 
         Employee origEmployee = employeeDao.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for id: " + id));

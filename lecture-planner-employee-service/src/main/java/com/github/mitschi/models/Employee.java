@@ -18,6 +18,12 @@ public class Employee {
     public Employee(){
     }
 
+    public Employee(Long id, String name, int employeeNumber) {
+        this.id = id;
+        this.name = name;
+        this.employeeNumber = employeeNumber;
+    }
+
     public Long getId() {
         return id;
     }
