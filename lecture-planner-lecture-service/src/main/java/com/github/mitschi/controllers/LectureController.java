@@ -1,7 +1,9 @@
 package com.github.mitschi.controllers;
 
+import com.github.mitschi.IllegalResourceException;
 import com.github.mitschi.ResourceNotFoundException;
 import com.github.mitschi.models.Lecture;
+import com.github.mitschi.models.validation.LectureValidator;
 import com.github.mitschi.repositories.LectureDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,9 @@ public class LectureController {
 
     @Autowired
     private LectureDao lectureDao;
+
+    @Autowired
+    private LectureValidator validator;
 
     @GetMapping()
     public List<Lecture> listLectures() {
@@ -37,14 +41,19 @@ public class LectureController {
     }
 
     @PostMapping()
-    public Lecture createLecture(@Valid @RequestBody Lecture lecture) {
+    public Lecture createLecture(@RequestBody Lecture lecture) throws IllegalResourceException {
+        if (!validator.isLectureValid(lecture))
+            throw new IllegalResourceException("Lecture values are not valid");
+
         return lectureDao.save(lecture);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Lecture> updateLecture(@PathVariable("id") Long id,
-                                                 @Valid @RequestBody Lecture lectureDto)
-            throws ResourceNotFoundException {
+                                                 @RequestBody Lecture lectureDto)
+            throws ResourceNotFoundException, IllegalResourceException {
+        if (!validator.isLectureValid(lectureDto))
+            throw new IllegalResourceException("Lecture values are not valid");
 
         Lecture origLecture = lectureDao.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Lecture not found for id: " + id));
