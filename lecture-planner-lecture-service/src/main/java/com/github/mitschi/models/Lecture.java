@@ -17,6 +17,16 @@ public class Lecture {
 
     private Long lecturerId;
 
+    public Lecture() {
+    }
+
+    public Lecture(Long id, String name, String number, Long lecturerId) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.lecturerId = lecturerId;
+    }
+
     public Long getId() {
         return id;
     }
