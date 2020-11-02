@@ -141,10 +141,10 @@ public class LectureValidatorTest {
         Assert.assertFalse(res);
     }
 
-    @Test
-    public void isLectureValid_someLecture_isValid(){
-        Lecture someLecture = new Lecture(0L, "ase", "123.456", 1L);
-        boolean res = validator.isLectureValid(someLecture);
-        Assert.assertTrue(res);
-    }
+//    @Test
+//    public void isLectureValid_someLecture_isValid(){
+//        Lecture someLecture = new Lecture(0L, "ase", "123.456", 1L);
+//        boolean res = validator.isLectureValid(someLecture);
+//        Assert.assertTrue(res);
+//    }
 }
