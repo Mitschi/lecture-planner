@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lecture-planner-graphql
+spec:
+  type: LoadBalancer
+  selector:
+    app: lecture-planner-graphql
+  ports:
+    - name: http
+      targetPort: 8083
+      port: 80
+      nodePort: 30003
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lecture-planner-graphql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lecture-planner-graphql
+  template:
+    metadata:
+      labels:
+        app: lecture-planner-graphql
+    spec:
+      containers:
+        - name: lecture-planner-graphql
+          image: alexx882/lecture-planner-graphql
+          env:
+            - name: EMPLOYEE_HOST
+              value: lecture-planner-employee # kubernetes dns automatically finds the service inside the cluster
+            - name: EMPLOYEE_PORT
+              value: '80' # port is mapped to 80 in service
+            - name: LECTURE_HOST
+              value: lecture-planner-lecture
+            - name: LECTURE_PORT
+              value: '80'
+          ports:
+            - containerPort: 8083
+          imagePullPolicy: IfNotPresent

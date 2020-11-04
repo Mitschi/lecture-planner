@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service # used to expose the deployment as an transparent, accessible service
+metadata:
+  name: lecture-planner-employee
+spec:
+  type: LoadBalancer # will distribute the requests...
+  selector:
+    app: lecture-planner-employee # ...to pods from this deployment
+  ports: # which ports should be accessible from outside
+    - name: http
+      targetPort: 8081 # targetPort in the container/pod maps to...
+      port: 80 # ...port for this service inside kubernetes
+      nodePort: 30001 # ...port on the host/node
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment # used to manage running pods/containers
+metadata:
+  name: lecture-planner-employee
+spec:
+  replicas: 1 # number of replicated pods
+  selector:
+    matchLabels:
+      app: lecture-planner-employee
+  template:
+    metadata:
+      labels:
+        app: lecture-planner-employee
+    spec:
+      containers:
+        - name: lecture-planner-employee
+          image: alexx882/lecture-planner-employee # docker image for the container
+          env: # environment variables
+            - name: MYSQL_HOST
+              value: lecture-planner-employee-db # name of the db's service
+            - name: MYSQL_PORT
+              value: '3306'
+          ports:
+            - containerPort: 8081 # port exposed in the container
+          imagePullPolicy: IfNotPresent # when the image should be pulled from the repository
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lecture-planner-employee-db
+spec:
+  type: LoadBalancer
+  selector:
+    app: lecture-planner-employee-db
+  ports:
+    - name: mariadb
+      port: 3306
+      targetPort: 3306
+      # nodePort: randomly assigned
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lecture-planner-employee-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lecture-planner-employee-db
+  template:
+    metadata:
+      labels:
+        app: lecture-planner-employee-db
+    spec:
+      containers:
+        - name: lecture-planner-employee-db
+          image: mariadb
+          env:
+            - name: MYSQL_DATABASE
+              value: db_example
+            - name: MYSQL_ROOT_PASSWORD
+              value: mypass
+          ports:
+            - containerPort: 3306
+          imagePullPolicy: IfNotPresent

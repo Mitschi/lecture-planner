@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lecture-planner-frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: lecture-planner-frontend
+  ports:
+    - name: http
+      targetPort: 8080
+      port: 80
+      nodePort: 30000
+      protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lecture-planner-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lecture-planner-frontend
+  template:
+    metadata:
+      labels:
+        app: lecture-planner-frontend
+    spec:
+      containers:
+        - name: lecture-planner-frontend
+          image: alexx882/lecture-planner-frontend
+          env:
+            - name: GRAPHQL_HOST
+              value: lecture-planner-graphql
+            - name: GRAPHQL_PORT
+              value: '80'
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: IfNotPresent

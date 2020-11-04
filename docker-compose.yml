@@ -13,7 +13,7 @@ services:
       - MYSQL_DATABASE=db_example
       - MYSQL_ROOT_PASSWORD=mypass
   lecture-planner-employee:
-    image: lecture-planner-employee
+    image: alexx882/lecture-planner-employee
     build: lecture-planner-employee-service
     ports:
       - "8081:8081"
@@ -34,7 +34,7 @@ services:
       - MYSQL_DATABASE=db_example
       - MYSQL_ROOT_PASSWORD=mypass
   lecture-planner-lecture:
-    image: lecture-planner-lecture
+    image: alexx882/lecture-planner-lecture
     build: lecture-planner-lecture-service
     ports:
       - "8082:8082"
@@ -47,7 +47,7 @@ services:
 
   # GraphQL Microservice
   lecture-planner-graphql:
-    image: lecture-planner-graphql
+    image: alexx882/lecture-planner-graphql
     build: lecture-planner-graphql
     ports:
       - "8083:8083"
@@ -63,7 +63,7 @@ services:
 
   # Frontend Microservice
   lecture-planner-frontend:
-    image: lecture-planner-frontend
+    image: alexx882/lecture-planner-frontend
     build: lecture-planner-frontend
     ports:
       - "8080:8080"
